@@ -1,6 +1,7 @@
 #ifndef THEATER_THEATER_H
 #define THEATER_THEATER_H
 
+
 int reserva_asiento(int id_persona);
 
 int libera_asiento(int id_asiento);
