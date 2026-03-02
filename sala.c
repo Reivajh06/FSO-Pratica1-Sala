@@ -2,19 +2,19 @@
 #include <stdlib.h>
 
 unsigned int CAPACIDAD;
-int actualCapacity;
 
+//Puntero del vector de asientos
 unsigned int* seats = NULL;
 
+//Contadores del número de asientos libres y ocupados del vector (array) de asientos, para evitar recorridos del vector
+//innecesarios (que en capacidades altas afectaría negativamente al rendimiento)
 unsigned int empty_seats;
 unsigned int occupied_seats;
 
 int reserva_asiento(int id_persona) {
-    if(seats == NULL) {
-        return - 1;
-    }
+    if(seats == NULL || id_persona < 0 || occupied_seats == CAPACIDAD) return - 1;
 
-    for(int i = 0; i < actualCapacity; i++) {
+    for(int i = 0; i < CAPACIDAD; i++) {
 
         if(seats[i] == 0) {
             seats[i] = id_persona;
@@ -28,11 +28,15 @@ int reserva_asiento(int id_persona) {
 }
 
 int libera_asiento(int id_asiento) {
-    if(seats == NULL || id_asiento >= actualCapacity || seats[id_asiento] == 0) return -1;
+    if(seats == NULL || id_asiento < 0) return -1;
+
+    if(seats[id_asiento] == 0) return -1;
 
     int seat = seats[id_asiento];
 
     seats[id_asiento] = 0;
+    empty_seats++;
+    occupied_seats--;
 
     return seat;
 }
@@ -40,21 +44,29 @@ int libera_asiento(int id_asiento) {
 int estado_asiento(int id_asiento) {
     if(seats == NULL) return -1;
 
+    if (id_asiento < 0) return -1;
+
     int seat = seats[id_asiento];
 
     return seat;
 }
 
 int asientos_libres() {
+    if(seats == NULL) return -1;
+
     return empty_seats;
 }
 
 int asientos_ocupados() {
-    return actualCapacity - empty_seats;
+    if(seats == NULL) return -1;
+
+    return occupied_seats;
 }
 
 int capacidad_sala() {
-    return actualCapacity;
+    if(seats == NULL) return -1;
+
+    return CAPACIDAD;
 }
 
 int crea_sala(int capacidad) {
@@ -72,7 +84,7 @@ int crea_sala(int capacidad) {
         seats[i] = 0;
     }
 
-    actualCapacity = capacidad;
+    CAPACIDAD = capacidad;
     empty_seats = capacidad;
     occupied_seats = 0;
 
@@ -88,7 +100,7 @@ int elimina_sala() {
     seats = NULL;
     empty_seats = 0;
     occupied_seats = 0;
-    actualCapacity = 0;
+    CAPACIDAD = 0;
 
     return 0;
 }
