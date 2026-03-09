@@ -60,13 +60,21 @@ void test_sala() {
     DebeSerCierto(estado_asiento(50) == 0);
     DebeSerCierto(reserva_asiento(20) == 1);
     DebeSerCierto(libera_asiento(1) == 20);
+    DebeSerCierto(libera_asiento(1)== -1);
     DebeSerCierto(estado_asiento(1) == 0);
+    DebeSerCierto(libera_asiento(510) == -1);
+    DebeSerCierto(reserva_asiento(-2) ==-1);
     for (int i = 1; i <= CAPACIDAD; i++) {
         DebeSerCierto(reserva_asiento(i) == i);
     }
+    DebeSerCierto(asientos_libres() == 0);
+    DebeSerCierto(asientos_ocupados() == CAPACIDAD);
+    DebeSerCierto(reserva_asiento(5) == -1);
     elimina_sala();
-
     DebeSerCierto(elimina_sala() == -1);
+    DebeSerCierto(crea_sala(0)==-1);
+    DebeSerCierto(crea_sala(-50) == -1);
+
     FIN_TEST("Reserva ");
 }
 
