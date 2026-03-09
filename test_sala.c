@@ -59,12 +59,14 @@ void test_sala() {
     DebeSerCierto(capacidad_sala() == CAPACIDAD);
     DebeSerCierto(estado_asiento(50) == 0);
     DebeSerCierto(reserva_asiento(20) == 1);
-    DebeSerCierto(estado_asiento(1) == 20);
     DebeSerCierto(libera_asiento(1) == 20);
+    DebeSerCierto(estado_asiento(1) == 0);
     for (int i = 1; i <= CAPACIDAD; i++) {
         DebeSerCierto(reserva_asiento(i) == i);
     }
     elimina_sala();
+
+    DebeSerCierto(elimina_sala() == -1);
     FIN_TEST("Reserva ");
 }
 

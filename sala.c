@@ -26,7 +26,7 @@ int reserva_asiento(int id_persona) {
             seats[i] = id_persona;
             empty_seats--;
             occupied_seats++;
-            return i;
+            return i + 1;
         }
     }
 
@@ -42,31 +42,33 @@ int reserva_asiento(int id_persona) {
  * en el asiento especificado
  **/
 int libera_asiento(int id_asiento) {
-    if(seats == NULL || id_asiento < 0) return -1;
+    if(seats == NULL || id_asiento <= 0) return -1;
 
-    if(seats[id_asiento] == 0) return -1;
+    if(id_asiento > CAPACIDAD) return -1;
 
-    int seat = seats[id_asiento];
+    if(seats[id_asiento - 1] == 0) return -1;
 
-    seats[id_asiento] = 0;
+    int person_id = seats[id_asiento - 1];
+
+    seats[id_asiento - 1] = 0;
     empty_seats++;
     occupied_seats--;
 
-    return seat;
+    return person_id;
 }
 
 /**
  * Determina el estado actual del asiento especificado
  *
  * @param id_asiento id del asiento pasado por parámetro
- * @return -1 si el vector de asientos no está inicializado o el id es inválido o el estado del asiento especificado
+ * @return -1 si el vector de asientos no está inicializado o el id es inválido, sino el estado del asiento especificado
  */
 int estado_asiento(int id_asiento) {
     if(seats == NULL) return -1;
 
-    if (id_asiento < 0) return -1;
+    if (id_asiento <= 0 || id_asiento > CAPACIDAD) return -1;
 
-    int seat = seats[id_asiento];
+    int seat = seats[id_asiento - 1];
 
     return seat;
 }
