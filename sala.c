@@ -18,7 +18,7 @@ unsigned int occupied_seats;
  * @return -1 si el vector de asientos no está inicializado o la sala está llena o el id del primer asiento que se encontró libre
  */
 int reserva_asiento(int id_persona) {
-    if(seats == NULL || id_persona < 0 || occupied_seats == CAPACIDAD) return - 1;
+    if(seats == NULL || id_persona <= 0 || occupied_seats == CAPACIDAD) return - 1;
 
     for(int i = 0; i < CAPACIDAD; i++) {
 
